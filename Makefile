@@ -1,7 +1,7 @@
-.PHONY: up
+.PHONE: up
 up:
-	docker compose up -d
+	ansible-playbook up.yml
 
-.PHONY: down
+.PHONE: down
 down:
-	docker compose down
+	ansible-playbook down.yml

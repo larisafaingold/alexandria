@@ -1,3 +1,17 @@
 {
-    "name": "alexandria"
+    "name": "alexandria",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "features": {
+      "ghcr.io/devcontainers/features/docker-in-docker:2.11.0": {
+        "version": "27.0.3",
+        "moby": false
+      }
+    },
+    "runArgs": [
+      "-v", "/var/run/docker.sock:/var/run/docker.sock"
+    ],
+    "postCreateCommand": "sudo chown root:docker /var/run/docker.sock && sudo chmod 660 /var/run/docker.sock"
 }

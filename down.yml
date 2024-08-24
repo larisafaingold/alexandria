@@ -1,0 +1,13 @@
+---
+- name: alexandria
+  hosts: localhost
+  tasks:
+    - name: Ensure Docker is installed
+      ansible.builtin.package:
+        name: docker-ce
+        state: present
+      become: yes
+    - name: Run docker-compose down
+      community.docker.docker_compose_v2:
+        project_src: .
+        state: absent
