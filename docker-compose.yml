@@ -1,0 +1,7 @@
+name: alexandria
+
+services:
+ elasticsearch:
+   image: elasticsearch:8.15.0
+   ports:
+    - 9200:9200
