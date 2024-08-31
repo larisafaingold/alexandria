@@ -1,7 +1,22 @@
 name: alexandria
 
 services:
- elasticsearch:
-   image: elasticsearch:8.15.0
-   ports:
-    - 9200:9200
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.15.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - ELASTIC_PASSWORD=password
+      - ELASTIC_USERNAME=elastic
+    volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+networks:
+  default:
+    name: elastic
+    external: false

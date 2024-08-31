@@ -2,12 +2,27 @@
 - name: alexandria
   hosts: localhost
   tasks:
-    - name: Ensure Docker is installed
-      ansible.builtin.package:
-        name: docker-ce
-        state: present
-      become: yes
     - name: Run docker-compose up
       community.docker.docker_compose_v2:
         project_src: .
         state: present
+    - name: Pause for 5 minutes to build app cache
+      ansible.builtin.pause:
+        seconds: 30
+    - name: Create an index
+      ansible.builtin.uri:
+        url: http://localhost:9200/renovate_logs
+        user: elastic
+        password: password
+        method: PUT
+        body_format: json
+        body:
+          settings:
+            number_of_shards: 5
+            number_of_replicas: 1
+          mappings:
+            properties:
+              name:
+                type: text
+              education:
+                type: keyword
